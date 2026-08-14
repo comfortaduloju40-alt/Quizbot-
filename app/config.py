@@ -1,0 +1,18 @@
+"""
+Central place for environment-driven configuration.
+"""
+
+import os
+from dataclasses import dataclass, field
+
+
+@dataclass(frozen=True)
+class Settings:
+    BOT_TOKEN: str = field(default_factory=lambda: os.environ["BOT_TOKEN"])
+    DATABASE_URL: str = field(default_factory=lambda: os.environ.get("DATABASE_URL", "sqlite:///data/quiz.db"))
+    WEBHOOK_URL: str = field(default_factory=lambda: os.environ.get("WEBHOOK_URL", ""))
+    PORT: int = field(default_factory=lambda: int(os.environ.get("PORT", "8080")))
+    LOG_LEVEL: str = field(default_factory=lambda: os.environ.get("LOG_LEVEL", "INFO"))
+
+
+settings = Settings()
